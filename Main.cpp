@@ -5,6 +5,7 @@
 #include "MatrixA.h"
 #include "MatrixF.h"
 #include "Gauss.h"
+#include "MatrixAccurate.h"
 
 using namespace std;
 
@@ -75,6 +76,13 @@ int main() {
     	outfile << matrix_U[i] << endl;
 
    	outfile.close();
+
+   	cout << "--------------------------------Sai so---------------------------------------" << endl;
+
+   	double* matrix_Accurate = matrixAccurate(sizeMatrix, delta_h);
+
+   	for (int i = 0; i < size; i++) 
+    	cout <<  matrix_U[i] - matrix_Accurate[i] << endl;
 
 	return 0;
 }
