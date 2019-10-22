@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<iomanip>
+#include<math.h>
 
 #include "MatrixA.h"
 #include "MatrixF.h"
@@ -44,15 +45,10 @@ int main() {
 
 	double delta_h;
 
-	cout <<"Input deta h: ";
+	cout <<"Input delta h: ";
 	cin >> delta_h;
 
-	double F;
-
-	cout <<"Input function F: ";
-	cin >> F;
-
-	double* matrix_F = matrixF(sizeMatrix, topBoundary, rightBoundary, delta_h, F);
+	double* matrix_F = matrixF(sizeMatrix, topBoundary, rightBoundary, delta_h);
 
 	cout << "------------------------------Matrix F-------------------------------------" << endl;
 
@@ -81,8 +77,12 @@ int main() {
 
    	double* matrix_Accurate = matrixAccurate(sizeMatrix, delta_h);
 
+   	double sum = 0.0;
+
    	for (int i = 0; i < size; i++) 
-    	cout <<  matrix_U[i] - matrix_Accurate[i] << endl;
+    	sum += pow(((matrix_U[i] - matrix_Accurate[i]) / matrix_Accurate[i]), 2);
+
+    cout << sqrt(sum);
 
 	return 0;
 }

@@ -15,9 +15,9 @@ double* matrixAccurate(int sizeMatrix, double delta_h) {
 	int index = 0;
 
 	// create matrix accurate
-	for (int i = 1; i < size - 1; i++) {
-		for (int j = 1; j < size - 1; j++) {
-			matrix[index] = funtionF((i - 1) * delta_h, j * delta_h) + funtionF(i* delta_h, (j + 1) * delta_h);
+	for (int i = 1; i <= sizeMatrix; i++) {
+		for (int j = 1; j <= sizeMatrix; j++) {
+			matrix[index] = funtionExsol(i * delta_h, j * delta_h);
 			index++;
 		}
 	}
