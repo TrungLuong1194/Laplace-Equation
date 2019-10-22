@@ -7,11 +7,13 @@
 using namespace std;
 
 // Return matrix F
-double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary, double delta_h) {
+double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary) {
 	ofstream outfile1 ("matrixBoundary.dat");
 	ofstream outfile2 ("matrixF.dat");
 
 	int size = sizeMatrix + 2;
+
+	double delta_h = topBoundary / (size - 1);
 
 	double** matrix = new double*[size];
         for (int i = 0; i < size; i++)
@@ -26,10 +28,12 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary, double
 	// create matrix boundary
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			if (i == 0) 
-				matrix[i][j] = topBoundary;
-			if (j == size - 1)
-				matrix[i][j] = rightBoundary;
+			// if (i == 0) 
+			// 	matrix[i][j] = topBoundary;
+			// if (j == size - 1)
+			// 	matrix[i][j] = rightBoundary;
+			if (i == 0 || i == size - 1 || j == 0 || j == size - 1) 
+				matrix[i][j] = funtionExsol(rightBoundary, topBoundary);
 		}
 	}
 
@@ -51,14 +55,14 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary, double
 	{
 		for (int j = 0; j < size; j++)
 		{
-			outfile1 << setw(3) << matrix[i][j];
+			outfile1 << setw(10) << matrix[i][j];
 		}
 		outfile1 << endl;
 	}
 
 	// Show matrix F
 	for (int i = 0; i < sizeF; i++) {
-		outfile2 << setw(3) << matrixF[i] << endl;
+		outfile2 << setw(10) << matrixF[i] << endl;
 	}
 
 	outfile1.close();
