@@ -76,7 +76,7 @@ int main() {
 
    	for (int i = 0; i < size; i++) 
     	sum += pow(((matrix_U[i] - matrix_Accurate[i]) / matrix_Accurate[i]), 2);
-
+    
     cout << sqrt(sum) << endl;
 
 	return 0;
