@@ -19,16 +19,16 @@ double* matrixAccurate(int sizeMatrix, double topBoundary, double rightBoundary)
 	int index = 0;
 
 	// create matrix accurate
-	for (int i = 1; i < size - 1; i++) {
-		for (int j = 1; j < size - 1; j++) {
-			matrix[index] = funtionU1(j * delta_h, (size - 1 - i) * delta_h);
+	for (int j = 1; j < size - 1; j++) {
+		for (int i = size - 2; i >= 1; i--) {
+			matrix[index] = funtionU2(j * delta_h, (size - 1 - i) * delta_h);
 			index++;
 		}
 	}
 
 	// Show matrix accurate
 	for (int i = 0; i < sizeF; i++) {
-		outfile << setw(3) << matrix[i] << endl;
+		outfile << "u[" << i << "]="  << matrix[i] << endl;
 	}
 
 	outfile.close();

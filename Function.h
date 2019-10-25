@@ -2,8 +2,8 @@
 #define FUNCTION_H
 
 double funtionF(double x, double y) {
-	return 2 * x * (x - 1) + 2 * y * (y - 1);
-	// return 4;
+	// return 2 * x * (x - 1) + 2 * y * (y - 1);
+	return 4.0;
 }
 
 double funtionU1(double x, double y) {
