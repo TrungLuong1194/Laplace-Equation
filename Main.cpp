@@ -7,6 +7,7 @@
 #include "MatrixF.h"
 #include "Gauss.h"
 #include "MatrixAccurate.h"
+#include "jacobi.h"
 
 using namespace std;
 
@@ -21,22 +22,22 @@ int main() {
 	// ------------------------------Matrix A-------------------------------
 	double** matrix_A = matrixA(sizeMatrix);
 
-	cout << "------------------------------Matrix A-------------------------------------" << endl;
+	// cout << "------------------------------Matrix A-------------------------------------" << endl;
 
-	for (int j = 0; j < size; j++)
-	{
-		for (int i = 0; i < size; i++)
-		{
-			cout << setw(3) << matrix_A[i][j];
-		}
-		cout << endl;
-	}
+	// for (int j = 0; j < size; j++)
+	// {
+	// 	for (int i = 0; i < size; i++)
+	// 	{
+	// 		cout << setw(3) << matrix_A[i][j];
+	// 	}
+	// 	cout << endl;
+	// }
 
 	cout << "---------------------------------------------------------------------------" << endl;
 
 	// ----------------------------- Matrix F ---------------------------
-	int topBoundary;                    // Bien tren
-	int rightBoundary;					// Bien phai
+	double topBoundary;                    // Bien tren
+	double rightBoundary;					// Bien phai
 
 	cout << "Input top boundary: ";
 	cin >> topBoundary;
@@ -45,18 +46,18 @@ int main() {
 
 	double* matrix_F = matrixF(sizeMatrix, topBoundary, rightBoundary);
 
-	cout << "------------------------------Matrix F-------------------------------------" << endl;
+	// cout << "------------------------------Matrix F-------------------------------------" << endl;
 
-	for (int i = 0; i < size; i++) {
-		cout << setw(3) << matrix_F[i] << endl;
-	}
+	// for (int i = 0; i < size; i++) {
+	// 	cout << setw(3) << matrix_F[i] << endl;
+	// }
 
 	// -------------------------------Gauss-Jordan---------------------------
 	double *matrix_U;
 
 	ofstream outfile ("result_U.dat");
 
-	cout << "--------------------------------Result---------------------------------------" << endl;
+	cout << "--------------------------------Result Gauss-----------------------------------" << endl;
 
 	matrix_U = gauss(matrix_A, matrix_F, size);
 
@@ -68,7 +69,7 @@ int main() {
 
    	outfile.close();
 
-   	cout << "--------------------------------Sai so---------------------------------------" << endl;
+   	cout << "--------------------------------Sai so Gauss---------------------------------------" << endl;
 
    	double* matrix_Accurate = matrixAccurate(sizeMatrix, topBoundary, rightBoundary);
 
@@ -76,8 +77,40 @@ int main() {
 
    	for (int i = 0; i < size; i++) 
     	sum += pow(((matrix_U[i] - matrix_Accurate[i]) / matrix_Accurate[i]), 2);
-    
+
     cout << sqrt(sum) << endl;
+
+    // double epx = abs(matrix_U[0] - matrix_Accurate[0]);
+    // double tmp = 0.0;
+
+    // for (int i = 1; i < size; i++) {
+    // 	tmp = abs(matrix_U[i] - matrix_Accurate[i]);
+    // 	if (tmp > epx)
+    // 		epx = tmp;
+    // }
+
+    // cout << epx << endl;
+
+
+
+    cout << "--------------------------------Result Jacobi-----------------------------------" << endl;
+    double *matrix_J;
+	matrix_J = solve_jacobi_sequential(matrix_A, size, matrix_F);
+
+	for (int i = 0; i < size; i++) 
+    	cout << "u[" << i << "]=" << matrix_J[i] << endl;
+
+   	cout << "--------------------------------Sai so Jacobi---------------------------------------" << endl;
+
+   	double sum1 = 0.0;
+
+   	for (int i = 0; i < size; i++) 
+    	sum1 += pow(((matrix_J[i] - matrix_Accurate[i]) / matrix_Accurate[i]), 2);
+
+    cout << sqrt(sum1) << endl;
+
+
+
 
 	return 0;
 }

@@ -12,6 +12,7 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary) {
 	ofstream outfile2 ("matrixF.dat");
 
 	int size = sizeMatrix + 2;
+	int sizeF = sizeMatrix * sizeMatrix;
 
 	double delta_h = topBoundary / (size - 1);
 
@@ -29,20 +30,19 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary) {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
-				matrix[i][j] = funtionU1(j * delta_h, (size - 1 - i) * delta_h);
+				matrix[i][j] = funtionU2(j * delta_h, (size - 1 - i) * delta_h);
 			}
 		}
 
 	}
 
-	int sizeF = sizeMatrix * sizeMatrix;
 	double* matrixF = new double[sizeF];
 	int index = 0;
 
 	// create matrix F
-	for (int i = 1; i < size - 1; i++) {
-		for (int j = 1; j < size - 1; j++) {
-			matrixF[index] = delta_h * delta_h * funtionF(i * delta_h, j * delta_h) - (matrix[i - 1][j] + matrix[i][j - 1] + matrix[i + 1][j] + matrix[i][j + 1]);
+	for (int j = 1; j < size - 1; j++) {
+		for (int i = size - 2; i >= 1; i--) {
+			matrixF[index] = delta_h * delta_h * funtionF(j * delta_h, (size - 1 - i) * delta_h) - (matrix[i - 1][j] + matrix[i][j - 1] + matrix[i + 1][j] + matrix[i][j + 1]);
 			index++;
 		}
 	}
