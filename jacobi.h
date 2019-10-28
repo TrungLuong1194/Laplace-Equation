@@ -1,49 +1,52 @@
 #include<iostream>
 #include "Equations.h"
 
-using namespace std;
+#define ITERATION_LIMIT 333
+#define EPSILON 0.0000001
 
-double* jacobi(double **A, double* y, int n) {
-    int i, j, it;
-    double** B;
-    
-    B = new double*[n];
-        for (int i = 0; i < n; i++)
-                B[i] = new double[n];
-
-    double* g = new double[n];
-    double* x = new double[n];
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            B[i][j] = i == j ? 0 : -A[i][j]/A[i][i];
-
-        g[i] = y[i]/A[i][i];
-        }
-    } 
-
-    double* xnew = new double[n];
-
-    for (i = 0; i < n; i++) {
-        x[i] = 0.0;
+void init_array_sequential(double* array, int array_size){
+    for (int i = 0; i < array_size; i++) {
+        array[i] = 0;
     }
+}
 
-    int iter = 50;
+double* clone_array_sequential(double* array, int array_length){
+    double* output = new double[array_length];
+    for (int i = 0; i < array_length; i++) {
+        output[i] = array[i];
+    }
+    return output;
+}
 
-    for (it = 0; it < iter; it++) {
+double* solve_jacobi_sequential(double** matrix, int matrix_size, double* right_hand_side) {
+    double* solution = new double[matrix_size];
+    double* last_iteration = new double[matrix_size];
+    
+    // Just for initialization ..
+    init_array_sequential(solution, matrix_size);
+    
+    for (int i = 0; i < ITERATION_LIMIT; i++){
+        last_iteration = clone_array_sequential(solution, matrix_size);
+        for (int j = 0; j < matrix_size; j++) {
+            double sigma_value = 0;
+            for (int k = 0; k < matrix_size; k++) {
+                if (j != k) {
+                    sigma_value += matrix[j][k] * solution[k];
+                }
+            }
+            solution[j] = (right_hand_side[j] - sigma_value) / matrix[j][j];
+        }
 
-        for (i = 0; i < n; i++) {
-            xnew[i] = 0.0;
-            for (j = 0; j < n; j++) {
-                xnew[i] += B[i][j] * x[j];
+        // Checking for the stopping condition ...
+        int stopping_count = 0;
+        for (int s = 0; s < matrix_size; s++) {
+            if (abs(last_iteration[s] - solution[s]) <= EPSILON) {
+                stopping_count++;
             }
         }
 
-        for (i = 0; i < n; i++) {
-            x[i] = xnew[i] + g[i];
-        }
-
+        if (stopping_count == matrix_size) break;
     }
 
-    return x;
+    return solution;
 }
