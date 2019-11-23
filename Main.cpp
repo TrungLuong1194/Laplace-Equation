@@ -95,7 +95,7 @@ int main() {
 
     cout << "--------------------------------Result Jacobi-----------------------------------" << endl;
     double *matrix_J;
-	matrix_J = solve_jacobi_sequential(matrix_A, size, matrix_F);
+	matrix_J = jacobi(matrix_A, matrix_F, size);
 
 	for (int i = 0; i < size; i++) 
     	cout << "u[" << i << "]=" << matrix_J[i] << endl;

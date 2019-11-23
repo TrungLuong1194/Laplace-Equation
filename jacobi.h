@@ -1,52 +1,77 @@
 #include<iostream>
+#include<cmath>
 #include "Equations.h"
+#include "MultiMatrix.h"
 
-#define ITERATION_LIMIT 333
-#define EPSILON 0.0000001
+#define EPSILON 0.01
 
-void init_array_sequential(double* array, int array_size){
-    for (int i = 0; i < array_size; i++) {
-        array[i] = 0;
+float* jacobi(float** A, float* y, int n) {
+    int i, j, it;
+    float** B;
+    double* R = new float[n];
+    float* R1 = new float[n];
+
+    float ri, r0, sumi, sum0;
+
+    B = new float*[n];
+        for (int i = 0; i < n; i++)
+            B[i] = new float[n];
+
+    float* g = new float[n];
+    float* x = new float[n];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {   
+            B[i][j] = i == j ? 0 : -A[i][j]/A[i][i];
+
+        g[i] = y[i]/A[i][i]; 
+        }
     }
-}
 
-double* clone_array_sequential(double* array, int array_length){
-    double* output = new double[array_length];
-    for (int i = 0; i < array_length; i++) {
-        output[i] = array[i];
+    for (i = 0; i < n; i++) {
+        sum0 += y[i] * y[i];
     }
-    return output;
-}
 
-double* solve_jacobi_sequential(double** matrix, int matrix_size, double* right_hand_side) {
-    double* solution = new double[matrix_size];
-    double* last_iteration = new double[matrix_size];
-    
-    // Just for initialization ..
-    init_array_sequential(solution, matrix_size);
-    
-    for (int i = 0; i < ITERATION_LIMIT; i++){
-        last_iteration = clone_array_sequential(solution, matrix_size);
-        for (int j = 0; j < matrix_size; j++) {
-            double sigma_value = 0;
-            for (int k = 0; k < matrix_size; k++) {
-                if (j != k) {
-                    sigma_value += matrix[j][k] * solution[k];
-                }
+    r0 = sqrt(sum0);
+
+    float* xnew = new float[n];
+
+    for (i = 0; i < n; i++) {
+        x[i] = 0.0;
+    }
+
+    int iter = 0;
+
+    for (it = 0; it < 30; it++) {
+        for (i = 0; i < n; i++) {
+            xnew[i] = 0.0;
+            for (j = 0; j < n; j++) {
+                xnew[i] += B[i][j] * x[j];
             }
-            solution[j] = (right_hand_side[j] - sigma_value) / matrix[j][j];
         }
 
-        // Checking for the stopping condition ...
-        int stopping_count = 0;
-        for (int s = 0; s < matrix_size; s++) {
-            if (abs(last_iteration[s] - solution[s]) <= EPSILON) {
-                stopping_count++;
-            }
+        for (i = 0; i < n; i++) {
+            x[i] = xnew[i] + g[i];
         }
 
-        if (stopping_count == matrix_size) break;
+        R = multiMatrix(A, y, n);
+
+        for (i = 0; i < n; i++) {
+            R1[i] = R[i] - y[i];
+            sumi += R1[i] * R1[i];
+        }
+
+        ri = sqrt(sumi);
+
+        // ri = 1;
+
+        // iter++;
+        // if (r0/ri <= EPSILON)
+        //     break;
     }
 
-    return solution;
+    // cout << "Number Iteration: " << iter << endl;
+    // cout << r0 / ri << endl;
+
+    return x;
 }
