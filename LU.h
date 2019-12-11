@@ -32,37 +32,41 @@ double* luWithPivot(double** a, double* b, int n) {
     }
 
     // create matrix P
-    double maxRow;
-    int indexColumn;
+
+    double maxColumn;
+    int indexRow;
     int index;
 
-    for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
     	index = 0;
 
     	while(true) {
     		if (matrixIndex[index] != 1) {
-    			maxRow = a[i][index];
+    			maxColumn = a[index][j];
     			break;
     		} else	{
     			index++;
     		}
     	}
 
-    	indexColumn = index;
+    	indexRow = index;
 
-    	for (int j = index + 1; j < n; j++) {
-    		if ((a[i][j] > maxRow) && (matrixIndex[j] != 1)) {
-    			maxRow = a[i][j];
-    			indexColumn = j;
+    	for (int i = index + 1; i < n; i++) {
+    		if ((a[i][j] > maxColumn) && (matrixIndex[i] != 1)) {
+    			maxColumn = a[i][j];
+    			indexRow = i;
     		}
     	}
 
-    	matrixP[i][indexColumn] = 1;
-    	matrixIndex[indexColumn] = 1;
+    	matrixP[indexRow][j] = 1;
+    	matrixIndex[indexRow] = 1;
     }
+
+
 
     // Print matrix P
     outfile << "Matrix P" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++)
 	{
@@ -73,12 +77,33 @@ double* luWithPivot(double** a, double* b, int n) {
 		outfile << endl;
 	}
 
-	// return P * a
+	// return matrix transposition P
+	double** matrixPT = new double*[n];
+        for (int i = 0; i < n; i++)
+                matrixPT[i] = new double[n];
+
+    matrixPT = matrixTransposition(matrixP, n);
+
+    // Print matrix P^T
+    outfile << "--------------------------------------------------------------" << endl;
+    outfile << "Matrix P^T" << endl;
+    outfile << endl;
+
+    for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			outfile << setw(3) << matrixPT[i][j];
+		}
+		outfile << endl;
+	}
+
+	// return P^T * a
 	double** matrix = new double*[n];
         for (int i = 0; i < n; i++)
                 matrix[i] = new double[n];
 
-    matrix = multiplyMatrix(matrixP, a, n);
+    matrix = multiplyMatrix(matrixPT, a, n);
 
 	// create matrix L vs U
 	for (int i = 0; i < n; i++) {
@@ -110,8 +135,9 @@ double* luWithPivot(double** a, double* b, int n) {
    	}
 
    	// Print matrix L
-   	outfile << endl;
+   	outfile << "--------------------------------------------------------------" << endl;
     outfile << "Matrix L" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++)
 	{
@@ -123,8 +149,9 @@ double* luWithPivot(double** a, double* b, int n) {
 	}
 
 	// Print matrix U
-   	outfile << endl;
+   	outfile << "--------------------------------------------------------------" << endl;
     outfile << "Matrix U" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++)
 	{
@@ -143,9 +170,11 @@ double* luWithPivot(double** a, double* b, int n) {
     matrixM = multiplyMatrix(matrixL, matrixU, n);
 
     // Print matrix M = L * U
-   	outfile << endl;
+   	outfile << "--------------------------------------------------------------" << endl;
    	outfile << "Check result" << endl;
+   	outfile << endl;
     outfile << "Matrix M = L * U" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++)
 	{
@@ -156,9 +185,10 @@ double* luWithPivot(double** a, double* b, int n) {
 		outfile << endl;
 	}
 
-	// Print matrix P * A
-   	outfile << endl;
-    outfile << "Matrix P * A" << endl;
+	// Print matrix P^T * A
+   	outfile << "--------------------------------------------------------------" << endl;
+    outfile << "Matrix P^T * A" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++)
 	{
@@ -169,14 +199,15 @@ double* luWithPivot(double** a, double* b, int n) {
 		outfile << endl;
 	}
 
-	// return bNew = P * b
+	// return bNew = P^T * b
 	double* bNew = new double[n];
 
-    bNew = multiplyMatrix2(matrixP, b, n);
+    bNew = multiplyMatrix2(matrixPT, b, n);
 
     // Print matrix bNew
-   	outfile << endl;
-    outfile << "Matrix bNew = P * b" << endl;
+   	outfile << "--------------------------------------------------------------" << endl;
+    outfile << "Matrix bNew = P^T * b" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++) {
 		outfile << setw(10) << bNew[i] << endl;
@@ -198,8 +229,9 @@ double* luWithPivot(double** a, double* b, int n) {
     }
 
     // Print matrix z
-   	outfile << endl;
+   	outfile << "--------------------------------------------------------------" << endl;
     outfile << "Matrix z (L * z = bNew)" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++) {
 		outfile << setw(10) << z[i] << endl;
@@ -220,8 +252,9 @@ double* luWithPivot(double** a, double* b, int n) {
     }
 
     // Print matrix x
-   	outfile << endl;
+   	outfile << "--------------------------------------------------------------" << endl;
     outfile << "Matrix x (U * x = z)" << endl;
+    outfile << endl;
 
     for (int i = 0; i < n; i++) {
 		outfile << setw(10) << x[i] << endl;

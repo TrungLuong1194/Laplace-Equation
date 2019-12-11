@@ -47,4 +47,18 @@ double* multiplyMatrix2(double** a, double* b, int n) {
 	return matrix;
 }
 
+double** matrixTransposition(double**a, int n) {
+	double** matrix = new double*[n];
+        for (int i = 0; i < n; i++)
+                matrix[i] = new double[n];
+
+    for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			matrix[i][j] = a[j][i];
+		}
+	}
+
+	return matrix;     
+}
+
 #endif
