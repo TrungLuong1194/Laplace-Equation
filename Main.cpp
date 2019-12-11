@@ -9,7 +9,7 @@
 #include "MatrixFNew.h"
 #include "Gauss.h"
 #include "MatrixAccurate.h"
-#include "jacobi.h"
+#include "Jacobi.h"
 #include "LU.h"
 
 using namespace std;
@@ -125,9 +125,9 @@ int main() {
 
 	ofstream outfile1 ("result_UNew.dat");
 
-	cout << "--------------------------------Result Gauss New-----------------------------------" << endl;
+	cout << "--------------------------------Result LU Method-----------------------------------" << endl;
 
-	matrix_UNew = gauss(matrix_ANew, matrix_FNew, size);
+	matrix_UNew = luWithPivot(matrix_ANew, matrix_FNew, size);
 
 	for (int i = 0; i < size; i++) 
     	cout << "u[" << i << "]=" << matrix_UNew[i] << endl;
@@ -136,17 +136,6 @@ int main() {
     	outfile1 << matrix_UNew[i] << endl;
 
    	outfile1.close();
-
-   	cout << "--------------------------------Result LU Method-----------------------------------" << endl;
-   	luWithPivot(matrix_ANew, size);
-
-
-
-
-
-
-
-
 
 	return 0;
 }

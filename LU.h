@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void luWithPivot(double **a, int n) {
+double* luWithPivot(double** a, double* b, int n) {
 	ofstream outfile ("matrixPLU.dat");
 
 	// matrix L
@@ -169,5 +169,65 @@ void luWithPivot(double **a, int n) {
 		outfile << endl;
 	}
 
+	// return bNew = P * b
+	double* bNew = new double[n];
+
+    bNew = multiplyMatrix2(matrixP, b, n);
+
+    // Print matrix bNew
+   	outfile << endl;
+    outfile << "Matrix bNew = P * b" << endl;
+
+    for (int i = 0; i < n; i++) {
+		outfile << setw(10) << bNew[i] << endl;
+	}
+
+    // return z (L * z = bNew)
+    double* z = new double[n];
+    double tmp;
+
+    z[0] = bNew[0] / matrixL[0][0];
+
+    for (int i = 1; i < n; i++) {
+    	tmp = 0.0;
+    	for (int j = 0; j < i; j++) {
+    		tmp += z[j] * matrixL[i][j];
+    	}
+
+    	z[i] = (bNew[i] - tmp) / matrixL[i][i];
+    }
+
+    // Print matrix z
+   	outfile << endl;
+    outfile << "Matrix z (L * z = bNew)" << endl;
+
+    for (int i = 0; i < n; i++) {
+		outfile << setw(10) << z[i] << endl;
+	}
+
+	// return x (U * x = z)
+    double* x = new double[n];
+
+    x[n - 1] = z[n - 1] / matrixU[n - 1][n - 1];
+
+    for (int i = n - 2; i >= 0; i--) {
+    	tmp = 0.0;
+    	for (int j = n - 1; j > i; j--) {
+    		tmp += x[j] * matrixU[i][j];
+    	}
+
+    	x[i] = (z[i] - tmp) / matrixU[i][i];
+    }
+
+    // Print matrix x
+   	outfile << endl;
+    outfile << "Matrix x (U * x = z)" << endl;
+
+    for (int i = 0; i < n; i++) {
+		outfile << setw(10) << x[i] << endl;
+	}
+
    	outfile.close();
+
+   	return x;
 }

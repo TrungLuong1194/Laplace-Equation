@@ -33,4 +33,18 @@ double** multiplyMatrix(double** a, double** b, int n) {
 	return matrix;
 }
 
+double* multiplyMatrix2(double** a, double* b, int n) {
+	double* matrix = new double[n];
+
+	for (int i = 0; i < n; i++) {
+		matrix[i] = 0;
+
+		for (int j = 0; j < n; j++) {
+			matrix[i] += a[i][j] * b[j];
+		}
+	}
+
+	return matrix;
+}
+
 #endif
