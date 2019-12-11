@@ -14,4 +14,23 @@ double funtionU2(double x, double y) {
 	return (x - 1) * (x - 1) + (y - 1) * (y - 1);
 }
 
+double** multiplyMatrix(double** a, double** b, int n) {
+	double** matrix = new double*[n];
+        for (int i = 0; i < n; i++)
+                matrix[i] = new double[n];
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			matrix[i][j] = 0;
+			
+			for (int k = 0; k < n; k++) {
+				matrix[i][j] += a[i][k] * b[k][j];
+			}
+
+		}
+	}
+
+	return matrix;
+}
+
 #endif

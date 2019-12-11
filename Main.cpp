@@ -4,10 +4,13 @@
 #include<math.h>
 
 #include "MatrixA.h"
+#include "MatrixANew.h"
 #include "MatrixF.h"
+#include "MatrixFNew.h"
 #include "Gauss.h"
 #include "MatrixAccurate.h"
 #include "jacobi.h"
+#include "LU.h"
 
 using namespace std;
 
@@ -108,6 +111,39 @@ int main() {
     	sum1 += pow(((matrix_J[i] - matrix_Accurate[i]) / matrix_Accurate[i]), 2);
 
     cout << sqrt(sum1) << endl;
+
+
+
+
+
+    // ------------------------------Matrix A New-------------------------------
+	double** matrix_ANew = matrixANew(sizeMatrix, topBoundary, rightBoundary);
+
+	double* matrix_FNew = matrixFNew(sizeMatrix, topBoundary, rightBoundary);
+
+	double *matrix_UNew;
+
+	ofstream outfile1 ("result_UNew.dat");
+
+	cout << "--------------------------------Result Gauss New-----------------------------------" << endl;
+
+	matrix_UNew = gauss(matrix_ANew, matrix_FNew, size);
+
+	for (int i = 0; i < size; i++) 
+    	cout << "u[" << i << "]=" << matrix_UNew[i] << endl;
+
+	for (int i = 0; i < size; i++) 
+    	outfile1 << matrix_UNew[i] << endl;
+
+   	outfile1.close();
+
+   	cout << "--------------------------------Result LU Method-----------------------------------" << endl;
+   	luWithPivot(matrix_ANew, size);
+
+
+
+
+
 
 
 
