@@ -11,6 +11,7 @@
 #include "MatrixAccurate.h"
 #include "Jacobi.h"
 #include "LU.h"
+#include "MatrixSb.h"
 
 using namespace std;
 
@@ -136,6 +137,10 @@ int main() {
     	outfile1 << matrix_UNew[i] << endl;
 
    	outfile1.close();
+
+
+   	 // ------------------------------Matrix S-------------------------------
+	double** matrix_Sb = matrixSb(sizeMatrix, topBoundary, rightBoundary);
 
 	return 0;
 }

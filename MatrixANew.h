@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Return matrix F New
+// Return matrix A New
 double** matrixANew(int sizeMatrix, double topBoundary, double rightBoundary) {
 
 	ofstream outfile ("matrixANew.dat");
