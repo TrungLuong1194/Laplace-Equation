@@ -166,6 +166,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     }
 
     // Output matrix A13^T
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "A13^T = " << endl;
 
     for (int i = 0; i < n3; i++) {
@@ -191,6 +192,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     }
 
     // Output matrix A23^T
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "A23^T = " << endl;
 
     for (int i = 0; i < n3; i++) {
@@ -210,6 +212,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     matrixA11I = matrixInverse(matrixA11, n1);
 
     // Output matrix A11^-1
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "A11^-1 = " << endl;
 
     for (int i = 0; i < n1; i++) {
@@ -229,6 +232,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     matrixA22I = matrixInverse(matrixA22, n2);
 
     // Output matrix A22^-1
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "A22^-1 = " << endl;
 
     for (int i = 0; i < n2; i++) {
@@ -256,6 +260,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     matrixS = subtractMatrix(matrixA33, matrixTmp2, matrixTmp4, n3);
 
     // Output matrix S
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "S = " << endl;
 
     for (int i = 0; i < n3; i++) {
@@ -312,6 +317,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     }
 
     // Output vector b1
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "b1 = " << endl;
     for (int i = 0; i < n1; i++) {
         outfile << matrixB1[i] << endl;
@@ -326,6 +332,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     }
 
     // Output vector b2
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "b2 = " << endl;
     for (int i = 0; i < n2; i++) {
         outfile << matrixB2[i] << endl;
@@ -340,6 +347,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     }
 
     // Output vector b3
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "b3 = " << endl;
     for (int i = 0; i < n3; i++) {
         outfile << matrixB3[i] << endl;
@@ -357,6 +365,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     matrixB3New = subtractVector(matrixB3, matrixTmp5, matrixTmp6, n3);
 
     // Output vector b3~
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "b3~ = " << endl;
     for (int i = 0; i < n3; i++) {
         outfile << matrixB3New[i] << endl;
@@ -369,6 +378,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     matrixU3 = luWithPivot(matrixS, matrixB3New, n3);
 
     // Output vector U3
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "U3 = " << endl;
     for (int i = 0; i < n3; i++) {
         outfile << matrixU3[i] << endl;
@@ -383,6 +393,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     matrixU1 = multiplyMatrix4(matrixA11I, matrixTmp8, n1, n1);
 
     // Output vector U1
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "U1 = " << endl;
     for (int i = 0; i < n1; i++) {
         outfile << matrixU1[i] << endl;
@@ -397,6 +408,7 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     matrixU2 = multiplyMatrix4(matrixA22I, matrixTmp10, n2, n2);
 
     // Output vector U2
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "U2 = " << endl;
     for (int i = 0; i < n2; i++) {
         outfile << matrixU2[i] << endl;
@@ -418,11 +430,28 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
     }
 
     // Output vector U
+    outfile << "-------------------------------------------------------------" << endl;
     outfile << "U = " << endl;
     for (int i = 0; i < size; i++) {
         outfile << matrixU[i] << endl;
     }
     outfile << endl;
+
+    // Matrix Original
+    double* matrixU_Ori = new double[size];
+    int index;
+
+    for (int i = 0; i < size; i++) {
+        index = matrixIndex[i];
+        matrixU_Ori[index] = matrixU[i];
+    }
+
+    // Show matrix U original
+    outfile << "-------------------------------------------------------------" << endl;
+    outfile << "U original = " << endl;
+    for (int i = 0; i < size; i++) {
+        outfile << matrixU_Ori[i] << endl;
+    }
 
 	outfile.close();
 

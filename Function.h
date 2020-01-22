@@ -136,85 +136,169 @@ double** matrixTransposition(double**a, int n) {
 	return matrix;     
 }
 
+// // Calculate Inverse Matrix
+
+// double** matrixInverse(double** A, int n)
+// {
+// 	double** a = new double*[2 * n];
+//         for (int i = 0; i < 2 * n; i++)
+//                 a[i] = new double[2 * n];
+
+//     double** matrix = new double*[n];
+//         for (int i = 0; i < n; i++)
+//                 matrix[i] = new double[n];
+
+//     double d = 0.0;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//     	for (int j = 0; j < n; j++)
+//     	{
+//     		a[i][j] = A[i][j];
+//     	}
+//     }
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         for (int j = 0; j < 2 * n; j++)
+//         {
+//             if (j == (i + n))
+//             {
+//                 a[i][j] = 1;
+//             }
+//         }
+//     }
+
+//     for (int i = n - 1; i >= 1; i--)
+//     {
+//         if (a[i-1][1] < a[i][1])
+//         {
+//             for(int j = 0; j < n * 2; j++)
+//             {
+//                 d = a[i][j];
+//                 a[i][j] = a[i-1][j];
+//                 a[i-1][j] = d;
+//             }
+//         }
+//     }
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         for (int j = 0; j < n * 2; j++)
+//         {
+//             if (j != i)
+//             {
+//                 d = a[j][i] / a[i][i];
+//                 for (int k = 1; k <= n * 2; k++)
+//                 {
+//                     a[j][k] = a[j][k] - (a[i][k] * d);
+//                 }
+//             }
+//         }
+//     }
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         d = a[i][i];
+//         for (int j = 0; j < n * 2; j++)
+//         {
+//             a[i][j] = a[i][j] / d;
+//         }
+//     }
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         for (int j = 0; j < n; j++)
+//         {
+//             matrix[i][j] = a[i][j + n];
+//         }
+//     }
+
+//     return matrix;
+// }
+
+
 // Calculate Inverse Matrix
 
 double** matrixInverse(double** A, int n)
 {
-	double** a = new double*[2 * n];
-        for (int i = 0; i < 2 * n; i++)
-                a[i] = new double[2 * n];
+    int i = 0, j = 0, k = 0;
+    double **mat = NULL;
+    double d = 0.0;
+
+
+    // Allocating memory for matrix array
+    mat = new double* [2*n];
+    for (i = 0; i < 2*n; ++i) {
+        mat[i] = new double[2*n];
+    }
 
     double** matrix = new double*[n];
         for (int i = 0; i < n; i++)
-                matrix[i] = new double[n];
+            matrix[i] = new double[n];
 
-    double d = 0.0;
-
-    for (int i = 0; i < n; i++)
-    {
-    	for (int j = 0; j < n; j++)
-    	{
-    		a[i][j] = A[i][j];
-    	}
+    for (i = 0; i < n; ++i) {
+        for (j = 0; j < n; ++j) {
+            matrix[i][j] = 0;
+        }
     }
-
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < 2 * n; j++)
-        {
-            if (j == (i + n))
-            {
-                a[i][j] = 1;
+    
+    //Inputs the coefficients of the matrix
+    for (i = 0; i < n; ++i) {
+        for (j = 0; j < n; ++j) {
+            mat[i][j] = A[i][j];
+        }
+    }
+    
+    // Initializing Right-hand side to identity matrix
+    for (i = 0; i < n; ++i) {
+        for (j = 0; j < 2*n; ++j) {
+            if(j == (i+n)) {
+                mat[i][j] = 1;
             }
         }
     }
-
-    for (int i = n - 1; i >= 1; i--)
-    {
-        if (a[i-1][1] < a[i][1])
-        {
-            for(int j = 0; j < n * 2; j++)
-            {
-                d = a[i][j];
-                a[i][j] = a[i-1][j];
-                a[i-1][j] = d;
+    
+    // Partial pivoting
+    for (i = n; i > 1; --i) {
+        if (mat[i-1][1] < mat[i][1]) {
+            for (j = 0; j < 2*n; ++j) {
+                d = mat[i][j];
+                mat[i][j] = mat[i-1][j];
+                mat[i-1][j] = d;
             }
         }
     }
-
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n * 2; j++)
-        {
-            if (j != i)
-            {
-                d = a[j][i] / a[i][i];
-                for (int k = 1; k <= n * 2; k++)
-                {
-                    a[j][k] = a[j][k] - (a[i][k] * d);
+    
+    // Reducing To Diagonal Matrix
+    for (i = 0; i < n; ++i) {
+        for (j = 0; j < 2*n; ++j) {
+            if (j != i) {
+                d = mat[j][i] / mat[i][i];
+                for (k = 0; k < n*2; ++k) {
+                    mat[j][k] -= mat[i][k]*d;
                 }
             }
         }
     }
-
-    for (int i = 0; i < n; i++)
-    {
-        d = a[i][i];
-        for (int j = 0; j < n * 2; j++)
-        {
-            a[i][j] = a[i][j] / d;
+    
+    // Reducing To Unit Matrix
+    for (i = 0; i < n; ++i) {
+        d = mat[i][i];
+        for (j = 0; j < 2*n; ++j) {
+            mat[i][j] = mat[i][j]/d;
         }
     }
+    
 
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            matrix[i][j] = a[i][j + n];
+    for (i = 0; i < n; ++i) {
+        for(j = 0; j < n; ++j) {
+            matrix[i][j] = mat[i][j + n];
         }
     }
 
     return matrix;
+
 }
 
 #endif
