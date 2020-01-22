@@ -233,16 +233,16 @@ double** matrixInverse(double** A, int n)
         mat[i] = new double[2*n];
     }
 
+    for (i = 0; i < 2*n; i++) {
+        for (j = 0; j < 2*n; j++) {
+            mat[i][j] = 0;
+        }
+    }
+
     double** matrix = new double*[n];
         for (int i = 0; i < n; i++)
             matrix[i] = new double[n];
 
-    for (i = 0; i < n; ++i) {
-        for (j = 0; j < n; ++j) {
-            matrix[i][j] = 0;
-        }
-    }
-    
     //Inputs the coefficients of the matrix
     for (i = 0; i < n; ++i) {
         for (j = 0; j < n; ++j) {
