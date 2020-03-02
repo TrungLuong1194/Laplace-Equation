@@ -2,6 +2,9 @@
 #include<fstream>
 #include<iomanip>
 
+#ifndef MATRIXF_H
+#define MATRIXF_H
+
 #include "Function.h"
 
 using namespace std;
@@ -30,7 +33,7 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary) {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
-				matrix[i][j] = funtionU2(j * delta_h, (size - 1 - i) * delta_h);
+				matrix[i][j] = funtionU4(j * delta_h, (size - 1 - i) * delta_h);
 			}
 		}
 
@@ -46,6 +49,16 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary) {
 			index++;
 		}
 	}
+
+	// matrixF[0] = -2;
+	// matrixF[1] = -1;
+	// matrixF[2] = -2;
+	// matrixF[3] = -1;
+	// matrixF[4] = 0;
+	// matrixF[5] = -1;
+	// matrixF[6] = -2;
+	// matrixF[7] = -1;
+	// matrixF[8] = -2;
 
 	// Show matrix Boundary
 	for (int i = 0; i < size; i++)
@@ -67,3 +80,5 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary) {
 
 	return (matrixF);
 }
+
+#endif

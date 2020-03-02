@@ -21,7 +21,7 @@ double* matrixAccurate(int sizeMatrix, double topBoundary, double rightBoundary)
 	// create matrix accurate
 	for (int j = 1; j < size - 1; j++) {
 		for (int i = size - 2; i >= 1; i--) {
-			matrix[index] = funtionU2(j * delta_h, (size - 1 - i) * delta_h);
+			matrix[index] = funtionU4(j * delta_h, (size - 1 - i) * delta_h);
 			index++;
 		}
 	}
