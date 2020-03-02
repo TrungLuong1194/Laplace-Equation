@@ -9,7 +9,7 @@
 using namespace std;
 
 // Return matrix U
-double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
+double* matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
 
 	ofstream outfile ("matrixSb.dat");
 
@@ -455,5 +455,5 @@ double** matrixSb(int sizeMatrix, double topBoundary, double rightBoundary) {
 
 	outfile.close();
 
-	return (matrixS);
+	return (matrixU_Ori);
 }

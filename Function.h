@@ -3,7 +3,9 @@
 
 double funtionF(double x, double y) {
 	// return 2 * x * (x - 1) + 2 * y * (y - 1);
-	return 4.0;
+	// return (6 * x - 2) * y * y * (y - 1) + (6 * y - 2) * x * x * (x - 1);
+    return 6 * (x - 1) + 6 * (y - 1);
+    // return 4.0;
 }
 
 double funtionU1(double x, double y) {
@@ -12,6 +14,14 @@ double funtionU1(double x, double y) {
 
 double funtionU2(double x, double y) {
 	return (x - 1) * (x - 1) + (y - 1) * (y - 1);
+}
+
+double funtionU3(double x, double y) {
+    return x * x * (x - 1) * y * y * (y - 1);
+}
+
+double funtionU4(double x, double y) {
+    return (x - 1) * (x - 1) * (x - 1) + (y - 1) * (y - 1) * (y - 1);
 }
 
 // Subtract matrix 2 dimension: a - b - c

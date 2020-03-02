@@ -33,7 +33,7 @@ double* matrixF(int sizeMatrix, double topBoundary, double rightBoundary) {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
-				matrix[i][j] = funtionU2(j * delta_h, (size - 1 - i) * delta_h);
+				matrix[i][j] = funtionU4(j * delta_h, (size - 1 - i) * delta_h);
 			}
 		}
 

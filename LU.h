@@ -1,5 +1,8 @@
 #include<iostream>
 
+#ifndef MATRIX_LU
+#define MATRIX_LU
+
 #include "Function.h"
 
 using namespace std;
@@ -264,3 +267,5 @@ double* luWithPivot(double** a, double* b, int n) {
 
    	return x;
 }
+
+#endif

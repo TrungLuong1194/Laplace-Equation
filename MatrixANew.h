@@ -2,6 +2,9 @@
 #include<fstream>
 #include<iomanip>
 
+#ifndef MATRIX_A_NEW
+#define MATRIX_A_NEW
+
 #include "MatrixA.h"
 
 using namespace std;
@@ -250,3 +253,5 @@ double** matrixANew(int sizeMatrix, double topBoundary, double rightBoundary) {
 
 	return (matrixNew);
 }
+
+#endif

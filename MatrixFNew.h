@@ -2,6 +2,9 @@
 #include<fstream>
 #include<iomanip>
 
+#ifndef MATRIX_F_NEW
+#define MATRIX_F_NEW
+
 #include "MatrixF.h"
 
 using namespace std;
@@ -81,3 +84,5 @@ double* matrixFNew(int sizeMatrix, double topBoundary, double rightBoundary) {
 
 	return (matrix_FNew);
 }
+
+#endif
